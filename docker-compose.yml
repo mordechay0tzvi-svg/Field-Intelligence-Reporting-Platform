@@ -16,3 +16,14 @@ services:
       DATA_PATH: data/field_reports.json
     depends_on:
       - kafka
+
+  consumer:
+    build:
+      context: ./KafkaConsumer
+    environment:
+      Kafka__BootstrapServers: kafka:9092
+      Kafka__GroupId: field-report-consumer
+      Kafka__Topic: reports
+      Kafka__AutoOffsetReset: Earliest
+    depends_on:
+      - kafka

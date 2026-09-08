@@ -28,4 +28,5 @@ public class FieldReport
     public string? SubjectId { get; set; }
     [JsonPropertyName("subjectType")]
     public string? SubjectType { get; set; }
+    public DateTime ProcessedAt { get; set; }
 }

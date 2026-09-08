@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("ElasticsearchStorage")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+f3849aca65f17932416bd1153dd7dc03c3895f6d")]
 [assembly: System.Reflection.AssemblyProductAttribute("ElasticsearchStorage")]
 [assembly: System.Reflection.AssemblyTitleAttribute("ElasticsearchStorage")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
