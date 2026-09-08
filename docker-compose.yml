@@ -1,0 +1,18 @@
+services:
+  kafka:
+    image: apache/kafka:latest
+    container_name: kafka
+    ports:
+      - "9092:9092"
+
+  producer:
+    build:
+      context: ./PythonProducer
+      dockerfile: Dockerfile
+    container_name: kafka-producer
+    environment:
+      KAFKA_BOOTSTRAP_SERVERS: kafka:9092
+      KAFKA_TOPIC: reports
+      DATA_PATH: data/field_reports.json
+    depends_on:
+      - kafka
