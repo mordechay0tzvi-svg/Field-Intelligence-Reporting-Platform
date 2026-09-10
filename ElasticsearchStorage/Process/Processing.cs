@@ -1,38 +1,21 @@
 using System.Text.Json;
 using Consumer;
 using Models;
+using Validator;
 using Microsoft.Extensions.Logging;
 namespace Processing;
 public class Process
 {
     private readonly ILogger<Process> _logger;
     private readonly IReportConsumer _consumer;
-    public Process(IReportConsumer consumer, ILogger<Process> logger)
+    private readonly IValidating _validator;
+    public Process(IReportConsumer consumer, ILogger<Process> logger, IValidating validator)
     {
         _consumer = consumer;
         _logger = logger;
+        _validator = validator;
     }
-    public bool Validate(FieldReport report)
-    {
-        if (report.SubjectId == null && report.ReportType != null)
-        {
-            return false;
-        }
-        if (report.SubjectId != null && report.ReportType == null)
-        {
-            return false;
-        }
-        if (new[] { "Low", "Medium", "High", "Critical" }.Contains(report.Priority))
-        {
-            return false;
-        }
-        if (new[]{"Observation","Movement","Meeting","Access","Communication","Logistics","Incident"}.Contains(report.ReportType))
-        {
-            return false;
-        }
-        return true;
-    }
-    public IEnumerable<FieldReport> FilterinfReports()
+    public IEnumerable<FieldReport> FilteringReports()
     {
         List<FieldReport> reports = new List<FieldReport>();
         while (true)
@@ -60,7 +43,7 @@ public class Process
                             _logger.LogInformation("this could never happen");
                             continue;
                         }
-                        if (Validate(report) == false)
+                        if (_validator.Validate(report) == false)
                         {
                             _logger.LogWarning("invalid feild(s)");
                             continue; 

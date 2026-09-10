@@ -27,3 +27,38 @@ services:
       Kafka__AutoOffsetReset: Earliest
     depends_on:
       - kafka
+
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:8.19.0
+    container_name: elasticsearch
+    environment:
+      - discovery.type=single-node
+      - xpack.security.enabled=false
+    ports:
+      - "9200:9200"
+
+  elasticsearch-storage:
+    build:
+      context: ./ElasticsearchStorage
+      dockerfile: Dockerfile
+    container_name: elasticsearch-storage
+    environment:
+      Elasticsearch__Uri: http://elasticsearch:9200
+      Elasticsearch__IndexName: field-reports
+      Kafka__BootstrapServers: kafka:9092
+    depends_on:
+      - elasticsearch
+      - kafka
+
+  elastic-api:
+    build:
+      context: ./ElasticApi
+      dockerfile: Dockerfile
+    container_name: elastic-api
+    ports:
+      - "5286:8080"
+    environment:
+      - Elasticsearch__Uri=http://elasticsearch:9200
+    depends_on:
+      - elasticsearch
+  

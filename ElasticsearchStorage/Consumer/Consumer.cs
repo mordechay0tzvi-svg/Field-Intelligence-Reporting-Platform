@@ -20,7 +20,7 @@ public class ReportConsumer : IReportConsumer
             EnableAutoCommit = false
         };
         _consumer = new ConsumerBuilder<string, string>(config).Build();
-        _consumer.Subscribe(configuration["Topic"]);
+        _consumer.Subscribe(configuration["Kafka:Topic"]);
         _logger = logger;
     }
     public ConsumeResult<string, string>? Consume()

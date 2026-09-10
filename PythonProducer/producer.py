@@ -10,6 +10,5 @@ class KafkaProducer:
         data = loading_method(path)
         for item in data:
             self.producer.produce(topic=self.topic,value=json.dumps(item))
-            # print("sended")
             self.producer.poll(0)
         self.producer.flush()
